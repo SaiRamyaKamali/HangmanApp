@@ -57,7 +57,7 @@ const Game = ({ username, onBackClick }) => {
             setIsCorrectGuess(true);
         }
     }
-
+    
     if(isCorrectGuess ||guesses >= 6){
         return(
             <Result isCorrectGuess={isCorrectGuess} randomWord={randomWord}/>
@@ -86,6 +86,7 @@ const Game = ({ username, onBackClick }) => {
                     </button>
                 ))}
             </div>
+            <button onClick={onBackClick}>Back</button>
         </div>
     );
     
