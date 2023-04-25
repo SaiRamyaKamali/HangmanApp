@@ -3,42 +3,46 @@ import React, { useState } from "react";
 import Game from "../Game";
 
 function User() {
-  const [username, setUsername] = useState("");
-  const [renderGame, setRenderGame] = useState(false);
+    const [username, setUsername] = useState("");
+    const [renderGame, setRenderGame] = useState(false);
 
-  function handleInputChange(event) {
-    setUsername(event.target.value);
-  }
+    function handleInputChange(event) {
+        setUsername(event.target.value);
+    }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log(`Username entered: ${username}`);
-    setRenderGame(true);
-  }
+    function handleSubmit(event) {
+        event.preventDefault();
+        if(!username){
+            alert('Please Enter username');
+        }
+        else{
+            setRenderGame(true);
+        }
+    }
 
-  function handleBackClick() {
-    setUsername("");
-    setRenderGame(false);
-  }
+    function handleBackClick() {
+        setUsername("");
+        setRenderGame(false);
+    }
 
-  return (
-    <div>
-      {!renderGame ? (
+    return (
         <div>
-          <h1>Enter your username</h1>
-          <form onSubmit={handleSubmit}>
-            <label>
-              Username:
-              <input type="text" value={username} onChange={handleInputChange} />
-            </label>
-            <button type="submit">Submit</button>
-          </form>
+            {!renderGame ? (
+                <div>
+                    <h1>Enter your username</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label>
+                            Username:
+                            <input type="text" value={username} onChange={handleInputChange} />
+                        </label>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            ) : (
+                <Game username={username} onBackClick={handleBackClick} />
+            )}
         </div>
-      ) : (
-        <Game username={username} onBackClick={handleBackClick} />
-      )}
-    </div>
-  );
+    );
 }
 
 export default User;
