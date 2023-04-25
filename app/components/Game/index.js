@@ -34,6 +34,8 @@ const Game = ({ username, onBackClick }) => {
     //keep track if user guessed the word coorectly
     const [isCorrectGuess, setIsCorrectGuess] = useState(false);
 
+    const [score, setScore] = useState(1000);
+
 
     function handleLetterClick(letter) {
         const newClickedLetters = clickedLetters.map((l) =>
@@ -52,6 +54,7 @@ const Game = ({ username, onBackClick }) => {
         setWordState(newWordState);
     
         if (!correctGuess) {
+          setScore((prevScore) => prevScore - 100);
             setGuesses(guesses + 1);
         } else if (!newWordState.includes(null)) {
             setIsCorrectGuess(true);
@@ -60,7 +63,7 @@ const Game = ({ username, onBackClick }) => {
     
     if(isCorrectGuess ||guesses >= 6){
         return(
-            <Result isCorrectGuess={isCorrectGuess} randomWord={randomWord}/>
+            <Result isCorrectGuess={isCorrectGuess} randomWord={randomWord} score={score}/>
         )
 
     }
@@ -68,6 +71,7 @@ const Game = ({ username, onBackClick }) => {
         <div>
             <h1>Hello, {username}!</h1>
             <p>Guess the word:</p>
+            <p>Score: {score}</p>
             <p>
                 {wordState.map((letter, index) => (
                     <span key={index} className="letter">
