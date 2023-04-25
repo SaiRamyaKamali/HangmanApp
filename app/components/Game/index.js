@@ -504,8 +504,9 @@ const Game = ({ username, onBackClick }) => {
     }
     
     if(isCorrectGuess ||guesses >= 6){
+      const finalScore = (guesses >= 6) ? 0 : score;
         return(
-            <Result isCorrectGuess={isCorrectGuess} randomWord={randomWord} score={score} user = {userName}/>
+            <Result isCorrectGuess={isCorrectGuess} randomWord={randomWord} score= {finalScore} user = {userName}/>
         )
 
     }
