@@ -1,0 +1,11 @@
+.hidden-letter {
+    display: inline-block;
+    width: 1em;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: transparent;
+    text-shadow: 0 0 0.5em black;
+  }
+  
