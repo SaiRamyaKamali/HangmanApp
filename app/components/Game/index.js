@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Result from '../Result'
+import db from '../firebase';
 
+var userName ="";
 const randomWords = ['absolute',
 'accident',
 'accustom',
@@ -455,6 +457,7 @@ const alphabet = [...'abcdefghijklmnopqrstuvwxyz'].map((letter) => ({
 
 const Game = ({ username, onBackClick }) => {
     //generate random word and store in the state
+    userName=username;
     const [randomWord, setRandomWord] = useState(() => {
         const randomIndex = Math.floor(Math.random() * randomWords.length);
         return randomWords[randomIndex];
@@ -475,7 +478,6 @@ const Game = ({ username, onBackClick }) => {
     const [isCorrectGuess, setIsCorrectGuess] = useState(false);
 
     const [score, setScore] = useState(1000);
-
 
     function handleLetterClick(letter) {
         const newClickedLetters = clickedLetters.map((l) =>
@@ -503,7 +505,7 @@ const Game = ({ username, onBackClick }) => {
     
     if(isCorrectGuess ||guesses >= 6){
         return(
-            <Result isCorrectGuess={isCorrectGuess} randomWord={randomWord} score={score}/>
+            <Result isCorrectGuess={isCorrectGuess} randomWord={randomWord} score={score} user = {userName}/>
         )
 
     }

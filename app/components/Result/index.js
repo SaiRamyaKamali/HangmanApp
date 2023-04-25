@@ -1,4 +1,14 @@
-const Result = ({ isCorrectGuess, randomWord, score }) =>{
+import db from "../firebase";
+import { useEffect } from "react";
+
+const Result = ({ isCorrectGuess, randomWord, score, user }) =>{
+    useEffect(() =>{
+        db.collection("scores").
+      add({
+        Name: user,
+        sc: score, 
+      });
+    },[])
    if(isCorrectGuess){
     return(
         <div>
