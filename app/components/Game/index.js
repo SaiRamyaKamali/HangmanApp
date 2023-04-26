@@ -579,7 +579,7 @@ const Game = ({ username, onBackClick }) => {
                             key={letterObj.letter}
                             disabled={letterObj.clicked || guesses >= 6 || isCorrectGuess}
                             onClick={() => handleLetterClick(letterObj.letter)}
-                            className={letterObj.clicked || guesses >= 6 || isCorrectGuess ? "disabled-button" : 'enabled-button'}
+                            className={isCorrectGuess?'enabled-button':guesses >= 6?'disabled-button':letterObj.clicked ? randomWord.includes(letterObj.letter) ? "enabled-button" : "disabled-button": "letter-button"}
                         >
                             {letterObj.letter}
                         </button>
