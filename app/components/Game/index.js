@@ -542,8 +542,28 @@ const Game = ({ username, onBackClick }) => {
     }
         , [isCorrectGuess, randomWords]);
 
+    //when game is over the score is automatically updated
+    useEffect(() => {
+        if (guesses >= 6) {
+          // update score in the database
+          db.collection("scores").add({
+            Name: username,
+            sc: finalScore,
+          });
+        }
+      }, [guesses]);
+
+
+      function onClickExit() {
+        const confirmed = window.confirm("Your Score will not be saved until you finish the game. Are you sure you want to exit?");
+      
+        if (confirmed) {
+          onBackClick();
+        }
+      }
+
     //when user clicks exit save the current total score/ cumulative score and exit
-    function onClickExit() {
+    /*function onClickExit() {
         db.collection("scores").add({
             Name: username,
             sc: finalScore,
@@ -552,7 +572,7 @@ const Game = ({ username, onBackClick }) => {
         }).catch((error) => {
             console.log("Error saving score:", error);
         });
-    }
+    }*/
 
     return (
         <div>
@@ -579,7 +599,7 @@ const Game = ({ username, onBackClick }) => {
                             key={letterObj.letter}
                             disabled={letterObj.clicked || guesses >= 6 || isCorrectGuess}
                             onClick={() => handleLetterClick(letterObj.letter)}
-                            className={isCorrectGuess?'enabled-button':guesses >= 6?'disabled-button':letterObj.clicked ? randomWord.includes(letterObj.letter) ? "enabled-button" : "disabled-button": "letter-button"}
+                            className={isCorrectGuess ? 'enabled-button' : guesses >= 6 ? 'disabled-button' : letterObj.clicked ? randomWord.includes(letterObj.letter) ? "enabled-button" : "disabled-button" : "letter-button"}
                         >
                             {letterObj.letter}
                         </button>
