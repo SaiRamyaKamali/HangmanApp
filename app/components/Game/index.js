@@ -481,6 +481,8 @@ const Game = ({ username, onBackClick }) => {
 
     const [score, setScore] = useState(1000);
 
+    const [finalScore, setFinalScore] = useState(0);
+
 
     function handleLetterClick(letter) {
         const newClickedLetters = clickedLetters.map((l) =>
@@ -501,7 +503,13 @@ const Game = ({ username, onBackClick }) => {
         if (!correctGuess) {
             setScore((prevScore) => prevScore - 100);
             setGuesses(guesses + 1);
+            console.log(guesses);
+            if(guesses>=5)
+            {
+              setScore(0);
+            }
         } else if (!newWordState.includes(null)) {
+            // setFinalScore(finalScore+score);
             setIsCorrectGuess(true);
         }else {
             for (let i = 0; i < randomWord.length; i++) {
@@ -518,11 +526,7 @@ const Game = ({ username, onBackClick }) => {
     useEffect(() => {
         if (isCorrectGuess) {
           // update score in the database
-          db.collection("scores").add({
-            Name: userName,
-            sc: score,
-          });
-          
+          setFinalScore((prevScore)=>prevScore+score);
           const timeoutId = setTimeout(() => {
             const randomIndex = Math.floor(Math.random() * randomWords.length);
             setRandomWord(randomWords[randomIndex]);
@@ -530,19 +534,21 @@ const Game = ({ username, onBackClick }) => {
             setWordState(Array(randomWords[randomIndex].length).fill(null));
             setGuesses(0);
             setIsCorrectGuess(false);
+            setFinalScore(finalScore+score);
             setScore(1000);
           }, 2000);
           
           return () => clearTimeout(timeoutId);
         }
-      }, [isCorrectGuess, randomWords]);
+      }
+      , [isCorrectGuess, randomWords]);
 
       
     //when user clicks exit save the current total score/ cumulative score and exit
     function onClickExit() {
         db.collection("scores").add({
           Name: username,
-          sc: score,
+          sc: finalScore,
         }).then(() => {
           onBackClick();
         }).catch((error) => {
@@ -555,7 +561,7 @@ const Game = ({ username, onBackClick }) => {
             <h1>Hello, {username}!</h1>
             <p>Guess the word:</p>
             <p>Current Score: {score}</p>
-            <p>Your Score/Total Score: //Should show cumulative score initially we can display it to be 0</p>
+            <p>Total Score:{finalScore}</p>
             {guesses>=6 ?<p>{randomWord}</p>:<p>
                 {wordState.map((letter, index) => (
                     <span key={index} className="letter">
@@ -576,7 +582,7 @@ const Game = ({ username, onBackClick }) => {
             </div>
             <button onClick={onClickExit}>Exit</button>
             {isCorrectGuess && <p>Correct <br/> Your Score: {score}</p>}
-            {guesses >= 6 &&<div> <p>InCorrect!! Game Over <br/> Your Score: {score}</p> <button onClick={onBackClick}>Play Again</button></div>}
+            {guesses >= 6 &&<div> <p>InCorrect!! Game Over <br/> Your Score: {finalScore}</p> <button onClick={onBackClick}>Play Again</button></div>}
         </div>
     );
 
