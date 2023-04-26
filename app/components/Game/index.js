@@ -484,11 +484,6 @@ const Game = ({ username, onBackClick }) => {
 
     const [finalScore, setFinalScore] = useState(0);
 
-    const [correctLetter, setCorrectLetter] = useState(false)
-
-    const [wrongLetter, setWrongLetter] = useState(false)
-
-
     function handleLetterClick(letter) {
         const newClickedLetters = clickedLetters.map((l) =>
             l.letter === letter ? { ...l, clicked: true } : l
@@ -501,21 +496,16 @@ const Game = ({ username, onBackClick }) => {
             if (randomWord[i] === letter) {
                 newWordState[i] = letter;
                 correctGuess = true;
-                setCorrectLetter(true)
-                setWrongLetter(false)
             }
         }
         setWordState(newWordState);
 
         if (!correctGuess) {
-            setCorrectLetter(false)
-            setWrongLetter(true)
             setScore((prevScore) => prevScore - 100);
             setGuesses(guesses + 1);
             console.log(guesses);
-            if(guesses>=5)
-            {
-              setScore(0);
+            if (guesses >= 5) {
+                setScore(0);
             }
         } else if (!newWordState.includes(null)) {
             // setFinalScore(finalScore+score);
@@ -534,29 +524,29 @@ const Game = ({ username, onBackClick }) => {
     //if user guesses the word correctly a new word will be generated after 2 seconds
     useEffect(() => {
         if (isCorrectGuess) {
-          // update score in the database
-          setFinalScore((prevScore)=>prevScore+score);
-          const timeoutId = setTimeout(() => {
-            const randomIndex = Math.floor(Math.random() * randomWords.length);
-            setRandomWord(randomWords[randomIndex]);
-            setClickedLetters(alphabet);
-            setWordState(Array(randomWords[randomIndex].length).fill(null));
-            setGuesses(0);
-            setIsCorrectGuess(false);
-            setFinalScore(finalScore+score);
-            setScore(1000);
-          }, 2000);
-          
-          return () => clearTimeout(timeoutId);
+            // update score in the database
+            setFinalScore((prevScore) => prevScore + score);
+            const timeoutId = setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * randomWords.length);
+                setRandomWord(randomWords[randomIndex]);
+                setClickedLetters(alphabet);
+                setWordState(Array(randomWords[randomIndex].length).fill(null));
+                setGuesses(0);
+                setIsCorrectGuess(false);
+                setFinalScore(finalScore + score);
+                setScore(1000);
+            }, 2000);
+
+            return () => clearTimeout(timeoutId);
         }
-      }
-      , [isCorrectGuess, randomWords]);
+    }
+        , [isCorrectGuess, randomWords]);
 
     //when user clicks exit save the current total score/ cumulative score and exit
     function onClickExit() {
         db.collection("scores").add({
-          Name: username,
-          sc: finalScore,
+            Name: username,
+            sc: finalScore,
         }).then(() => {
             onBackClick();
         }).catch((error) => {
@@ -566,49 +556,30 @@ const Game = ({ username, onBackClick }) => {
 
     return (
         <div>
-            <h1>Hello, {username}!</h1>
-            <p>Guess the word:</p>
-            <p>Current Score: {score}</p>
-            <p>Total Score:{finalScore}</p>
-            {guesses>=6 ?<p>{randomWord}</p>:<p>
-                {wordState.map((letter, index) => (
-                    <span key={index} className="letter">
-                        {letter ? `${letter} ` : '_ '}
-                    </span>
-                ))}
-            </p>}
             <div>
                 <button onClick={onClickExit}>Exit</button>
                 <div className="topSection">
                     <p>Current Score: {score}</p>
-                    <p>Your Score:0</p>
+                    <p>Your Score:{finalScore}</p>
                 </div>
             </div>
             <div className="gameContainer">
-                <h1>Hello, {username}!</h1>
-                <p>Guess the word:</p>
-                {guesses >= 6 ? <p>{randomWord}</p> : <p>
+                <h1 className="greeting">Hello, {username}!</h1>
+                <p className="guessWord">Guess the word:</p>
+                {guesses >= 6 ? <p className="game-over">{randomWord}</p> : <p>
                     {wordState.map((letter, index) => (
                         <span key={index} className="letter">
                             {letter ? `${letter} ` : '_ '}
                         </span>
                     ))}
                 </p>}
-                <div>
+                <div className='buttons-container'>
                     {clickedLetters.map((letterObj) => (
                         <button
                             key={letterObj.letter}
-                            //disabled={letterObj.clicked || guesses >= 6 || isCorrectGuess}
+                            disabled={letterObj.clicked || guesses >= 6 || isCorrectGuess}
                             onClick={() => handleLetterClick(letterObj.letter)}
-                            className={`letter-button ${
-                                letterObj.clicked 
-                                  ? correctLetter ? 'enabled-button' : wrongLetter?'disabled-button': letter-button
-                                  : 'initial-button'
-                              }`}
-                            //className={`letter-button ${letterObj.clicked || guesses >= 6 || isCorrectGuess ? "disabled-button" : "enabled-button"}`}
-                            //className={
-                                //letterObj.clicked ? (correctLetter?'enabled-button':wrongLetter?'disabled-button'):'letter-button'
-                             // }
+                            className={letterObj.clicked || guesses >= 6 || isCorrectGuess ? "disabled-button" : 'enabled-button'}
                         >
                             {letterObj.letter}
                         </button>
@@ -617,9 +588,7 @@ const Game = ({ username, onBackClick }) => {
                 {isCorrectGuess && <p>Correct <br /> Your Score: {score}</p>}
                 {guesses >= 6 && <div> <p>InCorrect!! Game Over <br /> Your Score: {score}</p> <button onClick={onBackClick}>Play Again</button></div>}
             </div>
-            <button onClick={onClickExit}>Exit</button>
-            {isCorrectGuess && <p>Correct <br/> Your Score: {score}</p>}
-            {guesses >= 6 &&<div> <p>InCorrect!! Game Over <br/> Your Score: {finalScore}</p> <button onClick={onBackClick}>Play Again</button></div>}
+
         </div>
     );
 

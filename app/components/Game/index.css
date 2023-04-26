@@ -9,10 +9,15 @@
     text-shadow: 0 0 0.5em black;
   }
   
-  /*span.letter {
+  span.letter {
     font-weight: bold;
     font-size: 25px;
-}*/
+}
+
+.game-over{
+  font-weight: bold;
+  font-size: 25px;
+}
 
 .topSection{
   margin-top: 30px;
@@ -39,6 +44,8 @@
   width: 40px ;
   height: 40px ;
   border-radius: 50px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .letter-button{
@@ -49,6 +56,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50px;
+  margin-right: 10px;
+
 }
 
 .disabled-button{
@@ -59,5 +68,24 @@
   width: 40px ;
   height: 40px ;
   border-radius: 50px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
+.buttons-container{
+  width: 70vh;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+.greeting{
+  margin-bottom: 20px;
+}
+
+.guessWord{
+  margin-bottom: 20px;
+}
