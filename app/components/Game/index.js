@@ -484,6 +484,10 @@ const Game = ({ username, onBackClick }) => {
 
     const [finalScore, setFinalScore] = useState(0);
 
+    const [correctLetter, setCorrectLetter] = useState(false)
+
+    const [wrongLetter, setWrongLetter] = useState(false)
+
 
     function handleLetterClick(letter) {
         const newClickedLetters = clickedLetters.map((l) =>
@@ -497,11 +501,15 @@ const Game = ({ username, onBackClick }) => {
             if (randomWord[i] === letter) {
                 newWordState[i] = letter;
                 correctGuess = true;
+                setCorrectLetter(true)
+                setWrongLetter(false)
             }
         }
         setWordState(newWordState);
 
         if (!correctGuess) {
+            setCorrectLetter(false)
+            setWrongLetter(true)
             setScore((prevScore) => prevScore - 100);
             setGuesses(guesses + 1);
             console.log(guesses);
@@ -570,13 +578,13 @@ const Game = ({ username, onBackClick }) => {
                 ))}
             </p>}
             <div>
-                <div>
-                    <p>Current Score: {score}</p>
-                    <p>Your Score/Total Score: //Should show cumulative score initially we can display it to be 0</p>
-                </div>
                 <button onClick={onClickExit}>Exit</button>
+                <div className="topSection">
+                    <p>Current Score: {score}</p>
+                    <p>Your Score:0</p>
+                </div>
             </div>
-            <div>
+            <div className="gameContainer">
                 <h1>Hello, {username}!</h1>
                 <p>Guess the word:</p>
                 {guesses >= 6 ? <p>{randomWord}</p> : <p>
@@ -590,8 +598,17 @@ const Game = ({ username, onBackClick }) => {
                     {clickedLetters.map((letterObj) => (
                         <button
                             key={letterObj.letter}
-                            disabled={letterObj.clicked || guesses >= 6 || isCorrectGuess}
+                            //disabled={letterObj.clicked || guesses >= 6 || isCorrectGuess}
                             onClick={() => handleLetterClick(letterObj.letter)}
+                            className={`letter-button ${
+                                letterObj.clicked 
+                                  ? correctLetter ? 'enabled-button' : wrongLetter?'disabled-button': letter-button
+                                  : 'initial-button'
+                              }`}
+                            //className={`letter-button ${letterObj.clicked || guesses >= 6 || isCorrectGuess ? "disabled-button" : "enabled-button"}`}
+                            //className={
+                                //letterObj.clicked ? (correctLetter?'enabled-button':wrongLetter?'disabled-button'):'letter-button'
+                             // }
                         >
                             {letterObj.letter}
                         </button>

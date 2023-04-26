@@ -13,3 +13,51 @@
     font-weight: bold;
     font-size: 25px;
 }*/
+
+.topSection{
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  width: 100vh;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.gameContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vh;
+}
+
+.enabled-button{
+  color:white ;
+  background-color: blue;
+  border:none ;
+  cursor: pointer ;
+  width: 40px ;
+  height: 40px ;
+  border-radius: 50px;
+}
+
+.letter-button{
+  color:white;
+  background-color: lightblue;
+  border:none;
+  cursor: pointer; 
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+}
+
+.disabled-button{
+  color:white ;
+  background-color: red ;
+  border:none;
+  cursor: not-allowed; 
+  width: 40px ;
+  height: 40px ;
+  border-radius: 50px;
+}
+
