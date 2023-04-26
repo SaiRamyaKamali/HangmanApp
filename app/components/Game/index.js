@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import correctSound from "../public/sounds/correctSound.wav";
+import errorSound from "../public/sounds/errorSound.mp3";
+import winSound from "../public/sounds/winSound.mp3";
+import lostSound from '../public/sounds/lostSound.wav'
 import db from '../firebase';
 import { useEffect } from "react";
 import './index.css';
@@ -484,6 +488,36 @@ const Game = ({ username, onBackClick }) => {
 
     const [finalScore, setFinalScore] = useState(0);
 
+    function playCorrectSound() {
+        console.log('playing correct sound')
+        const audio = new Audio(correctSound)
+        audio.play();
+      }
+
+      function playErrorSound() {
+        console.log('playing correct sound')
+        const audio = new Audio(errorSound)
+        audio.play();
+      }
+
+      function playWinSound() {
+        console.log('playing correct sound')
+        const audio = new Audio(winSound)
+        audio.play();
+      }
+
+      function playLostSound() {
+        console.log('playing correct sound')
+        const audio = new Audio(lostSound)
+        audio.play();
+      }
+
+      useEffect(() => {
+        if (isCorrectGuess) {
+          playWinSound();
+        }
+      }, [isCorrectGuess]);
+
     function handleLetterClick(letter) {
         const newClickedLetters = clickedLetters.map((l) =>
             l.letter === letter ? { ...l, clicked: true } : l
@@ -496,11 +530,13 @@ const Game = ({ username, onBackClick }) => {
             if (randomWord[i] === letter) {
                 newWordState[i] = letter;
                 correctGuess = true;
+                playCorrectSound();
             }
         }
         setWordState(newWordState);
 
         if (!correctGuess) {
+            playErrorSound();
             setScore((prevScore) => prevScore - 100);
             setGuesses(guesses + 1);
             console.log(guesses);
@@ -545,6 +581,7 @@ const Game = ({ username, onBackClick }) => {
     //when game is over the score is automatically updated
     useEffect(() => {
         if (guesses >= 6) {
+            playLostSound()
           // update score in the database
           db.collection("scores").add({
             Name: username,
