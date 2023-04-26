@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import db from '../firebase';
 import { useEffect } from "react";
+import './index.css';
 
 var userName = "";
 const randomWords = ['absolute',
@@ -511,7 +512,7 @@ const Game = ({ username, onBackClick }) => {
         } else if (!newWordState.includes(null)) {
             // setFinalScore(finalScore+score);
             setIsCorrectGuess(true);
-        }else {
+        } else {
             for (let i = 0; i < randomWord.length; i++) {
                 if (randomWord[i] === letter) {
                     newWordState[i] = letter;
@@ -543,18 +544,17 @@ const Game = ({ username, onBackClick }) => {
       }
       , [isCorrectGuess, randomWords]);
 
-      
     //when user clicks exit save the current total score/ cumulative score and exit
     function onClickExit() {
         db.collection("scores").add({
           Name: username,
           sc: finalScore,
         }).then(() => {
-          onBackClick();
+            onBackClick();
         }).catch((error) => {
-          console.log("Error saving score:", error);
+            console.log("Error saving score:", error);
         });
-      } 
+    }
 
     return (
         <div>
@@ -570,15 +570,35 @@ const Game = ({ username, onBackClick }) => {
                 ))}
             </p>}
             <div>
-                {clickedLetters.map((letterObj) => (
-                    <button
-                        key={letterObj.letter}
-                        disabled={letterObj.clicked || guesses >= 6 || isCorrectGuess}
-                        onClick={() => handleLetterClick(letterObj.letter)}
-                    >
-                        {letterObj.letter}
-                    </button>
-                ))}
+                <div>
+                    <p>Current Score: {score}</p>
+                    <p>Your Score/Total Score: //Should show cumulative score initially we can display it to be 0</p>
+                </div>
+                <button onClick={onClickExit}>Exit</button>
+            </div>
+            <div>
+                <h1>Hello, {username}!</h1>
+                <p>Guess the word:</p>
+                {guesses >= 6 ? <p>{randomWord}</p> : <p>
+                    {wordState.map((letter, index) => (
+                        <span key={index} className="letter">
+                            {letter ? `${letter} ` : '_ '}
+                        </span>
+                    ))}
+                </p>}
+                <div>
+                    {clickedLetters.map((letterObj) => (
+                        <button
+                            key={letterObj.letter}
+                            disabled={letterObj.clicked || guesses >= 6 || isCorrectGuess}
+                            onClick={() => handleLetterClick(letterObj.letter)}
+                        >
+                            {letterObj.letter}
+                        </button>
+                    ))}
+                </div>
+                {isCorrectGuess && <p>Correct <br /> Your Score: {score}</p>}
+                {guesses >= 6 && <div> <p>InCorrect!! Game Over <br /> Your Score: {score}</p> <button onClick={onBackClick}>Play Again</button></div>}
             </div>
             <button onClick={onClickExit}>Exit</button>
             {isCorrectGuess && <p>Correct <br/> Your Score: {score}</p>}
