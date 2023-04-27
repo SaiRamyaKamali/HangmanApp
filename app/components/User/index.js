@@ -5,6 +5,7 @@ import db from "../firebase";
 import queryString from "query-string";
 import { useRouter } from "next/navigation";
 import { useLocation } from 'react-router-dom';
+import '../User/index.css';
 
 
 function User() {
