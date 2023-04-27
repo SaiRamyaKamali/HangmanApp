@@ -37,10 +37,9 @@
 }
 
 .enabled-button{
-  font-size: 18px;
-  color:white ;
-  background-color: green;
-  border:none ;
+  font-size: 20px;
+  color:#2ecc71 ;
+  border:2px solid #2ecc71;
   cursor: pointer ;
   width: 40px ;
   height: 40px ;
@@ -51,9 +50,9 @@
 }
 
 .letter-button{
-  font-size: 18px;
+  font-size: 20px;
   color:white;
-  background-color: rgb(107, 172, 194);
+  background-color: #3498db;
   border:none;
   cursor: pointer; 
   width: 40px;
@@ -66,10 +65,9 @@
 }
 
 .disabled-button{
-  font-size: 18px;
-  color:white ;
-  background-color: red ;
-  border:none;
+  font-size: 20px;
+  color:#c0392b;
+  border: 2px solid #c0392b;
   cursor: not-allowed; 
   width: 40px ;
   height: 40px ;
@@ -90,8 +88,77 @@
 }
 .greeting{
   margin-bottom: 20px;
+  color: #e85e09;
 }
 
 .guessWord{
   margin-bottom: 20px;
+}
+
+.correct-message{
+  margin-top:20px;
+  font-weight: bold;
+  color:#2ecc71;
+  text-align: center;
+}
+
+.gameover-message{
+  margin-top:20px;
+  font-weight: bold;
+  color:#c0392b;
+  text-align: center;
+}
+
+.playAgain-button{
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 50px;
+  background-color: #3498db;
+  border: none;
+  color: white;
+  font-size: 16px;
+
+}
+
+.gameover-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.exit-icon{
+  color: red;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.exit-button{
+  cursor: pointer;
+  border: none;
+  background-color: none;
+  background-color: white;
+}
+
+.game-page-bg{
+  background-color: white;
+  padding: 20px;
+}
+
+.score{
+  color: #2ecc71;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+.final-score{
+  font-size: 20px;
+  color:#3498db;
+  font-weight: bold;
 }

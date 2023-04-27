@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import correctSound from "../public/sounds/correctSound.wav";
 import errorSound from "../public/sounds/errorSound.mp3";
 import winSound from "../public/sounds/winSound.mp3";
@@ -9,7 +11,7 @@ import './index.css';
 
 
 var userName = "";
-const randomWords = ['absolute',
+const words = ['absolute',
     'accident',
     'accustom',
     'admission',
@@ -456,10 +458,12 @@ const randomWords = ['absolute',
     'whichever',
     'yesterday'];
 
-const alphabet = [...'abcdefghijklmnopqrstuvwxyz'].map((letter) => ({
+const alphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].map((letter) => ({
     letter,
     clicked: false,
 }));
+
+const randomWords = words.map(each=>each.toUpperCase());
 
 const Game = ({ username, customWord, onBackClick }) => {
     //generate random word and store in the state
@@ -618,12 +622,12 @@ const Game = ({ username, customWord, onBackClick }) => {
     }*/
 
     return (
-        <div>
+        <div className="game-page-bg">
             <div>
-                <button onClick={onClickExit}>Exit</button>
+                <button onClick={onClickExit} className='exit-button'> <FontAwesomeIcon icon={faTimes} className="exit-icon"/></button>
                 <div className="topSection">
-                    <p>Current Score: {score}</p>
-                    <p>Your Score:{finalScore}</p>
+                    <p className="current-score">Current Score: <span className="score">{score}</span></p>
+                    <p className="your-score">Total Score: <span className="final-score">{finalScore}</span></p>
                 </div>
             </div>
             <div className="gameContainer">
@@ -636,6 +640,8 @@ const Game = ({ username, customWord, onBackClick }) => {
                         </span>
                     ))}
                 </p>}
+                {isCorrectGuess && <p className="correct-message">Correct <br /> Your Score: {finalScore}</p>}
+                {guesses >= 6 && <div className="gameover-container"> <p className="gameover-message">InCorrect!! Game Over <br /> Your Score: {score}</p> <button onClick={onBackClick} className="playAgain-button">Play Again</button></div>}
                 <div className='buttons-container'>
                     {clickedLetters.map((letterObj) => (
                         <button
@@ -648,8 +654,6 @@ const Game = ({ username, customWord, onBackClick }) => {
                         </button>
                     ))}
                 </div>
-                {isCorrectGuess && <p>Correct <br /> Your Score: {score}</p>}
-                {guesses >= 6 && <div> <p>InCorrect!! Game Over <br /> Your Score: {score}</p> <button onClick={onBackClick}>Play Again</button></div>}
             </div>
 
         </div>
