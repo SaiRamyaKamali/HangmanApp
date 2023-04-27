@@ -472,7 +472,7 @@ const Game = ({ username, customWord, onBackClick }) => {
     const [randomWord, setRandomWord] = useState(() => {
         if(customWord)
         {
-            return customWord.toLowerCase();
+            return customWord.toUpperCase();
         }
         const randomIndex = Math.floor(Math.random() * randomWords.length);
         return randomWords[randomIndex];

@@ -34,7 +34,10 @@ function User() {
         }
         else{
             // console.log(word);
+            if(word)
+            {
              setCustomWord(atob(word));
+            }
             setRenderGame(true);
         }
     }
