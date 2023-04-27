@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import correctSound from "../public/sounds/correctSound.wav";
@@ -471,19 +472,18 @@ const alphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].map((letter) => ({
     clicked: false,
 }));
 
-const randomWords = words.map(each=>each.toUpperCase());
+const randomWords = words.map(each => each.toUpperCase());
 
-const images = [image_0,image_1,image_2,image_3,image_4,image_5,image_7];
+const images = [image_0, image_1, image_2, image_3, image_4, image_5, image_7];
 console.log('1st image')
 console.log(images[0])
 
 const Game = ({ username, customWord, onBackClick }) => {
     //generate random word and store in the state
     userName = username;
-    console.log("Test "+customWord);
+    console.log("Test " + customWord);
     const [randomWord, setRandomWord] = useState(() => {
-        if(customWord)
-        {
+        if (customWord) {
             return customWord.toUpperCase();
         }
         const randomIndex = Math.floor(Math.random() * randomWords.length);
@@ -511,37 +511,46 @@ const Game = ({ username, customWord, onBackClick }) => {
     const [finalScore, setFinalScore] = useState(0);
 
     const [currentImage, setCurrentImage] = useState(images[0].src);
-    console.log(currentImage);
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const openModal = () => {
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
 
     function playCorrectSound() {
         console.log('playing correct sound')
         const audio = new Audio(correctSound)
         audio.play();
-      }
+    }
 
-      function playErrorSound() {
+    function playErrorSound() {
         console.log('playing correct sound')
         const audio = new Audio(errorSound)
         audio.play();
-      }
+    }
 
-      function playWinSound() {
+    function playWinSound() {
         console.log('playing correct sound')
         const audio = new Audio(winSound)
         audio.play();
-      }
+    }
 
-      function playLostSound() {
+    function playLostSound() {
         console.log('playing correct sound')
         const audio = new Audio(lostSound)
         audio.play();
-      }
+    }
 
-      useEffect(() => {
+    useEffect(() => {
         if (isCorrectGuess) {
-          playWinSound();
+            playWinSound();
         }
-      }, [isCorrectGuess]);
+    }, [isCorrectGuess]);
 
     function handleLetterClick(letter) {
         const newClickedLetters = clickedLetters.map((l) =>
@@ -608,22 +617,22 @@ const Game = ({ username, customWord, onBackClick }) => {
     useEffect(() => {
         if (guesses >= 6) {
             playLostSound()
-          // update score in the database
-          db.collection("scores").add({
-            Name: username,
-            sc: finalScore,
-          });
+            // update score in the database
+            db.collection("scores").add({
+                Name: username,
+                sc: finalScore,
+            });
         }
-      }, [guesses]);
+    }, [guesses]);
 
 
-      function onClickExit() {
+    function onClickExit() {
         const confirmed = window.confirm("Your Score will not be saved until you finish the game. Are you sure you want to exit?");
-      
+
         if (confirmed) {
-          onBackClick();
+            onBackClick();
         }
-      }
+    }
 
     //when user clicks exit save the current total score/ cumulative score and exit
     /*function onClickExit() {
@@ -640,7 +649,14 @@ const Game = ({ username, customWord, onBackClick }) => {
     return (
         <div className="game-page-bg">
             <div>
-                <button onClick={onClickExit} className='exit-button'> <FontAwesomeIcon icon={faTimes} className="exit-icon"/></button>
+                <div className="leader-board-exit-container">
+                <button onClick={onClickExit} className='exit-button'> <FontAwesomeIcon icon={faTimes} className="exit-icon" /></button>
+                <button onClick={openModal} className="leaderboard-button">Learder Board</button>
+                <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+                    <h2>Leader Board</h2>
+                    <button onClick={closeModal} className="leaderboard-button">Close Modal</button>
+                </Modal>
+                </div>
                 <div className="topSection">
                     <p className="current-score">Current Score: <span className="score">{score}</span></p>
                     <p className="your-score">Total Score: <span className="final-score">{finalScore}</span></p>
@@ -659,21 +675,21 @@ const Game = ({ username, customWord, onBackClick }) => {
                 {isCorrectGuess && <p className="correct-message">Correct <br /> Your Score: {finalScore}</p>}
                 {guesses >= 6 && <div className="gameover-container"> <p className="gameover-message">InCorrect!! Game Over <br /> Your Score: {score}</p> <button onClick={onBackClick} className="playAgain-button">Play Again</button></div>}
                 <div className="image-button-container">
-                <div>
-                    <img src={currentImage} className="image-hangman"/>
-                </div>
-                <div className='buttons-container'>
-                    {clickedLetters.map((letterObj) => (
-                        <button
-                            key={letterObj.letter}
-                            disabled={letterObj.clicked || guesses >= 6 || isCorrectGuess}
-                            onClick={() => handleLetterClick(letterObj.letter)}
-                            className={isCorrectGuess ? 'enabled-button' : guesses >= 6 ? 'disabled-button' : letterObj.clicked ? randomWord.includes(letterObj.letter) ? "enabled-button" : "disabled-button" : "letter-button"}
-                        >
-                            {letterObj.letter}
-                        </button>
-                    ))}
-                </div>
+                    <div>
+                        <img src={currentImage} className="image-hangman" />
+                    </div>
+                    <div className='buttons-container'>
+                        {clickedLetters.map((letterObj) => (
+                            <button
+                                key={letterObj.letter}
+                                disabled={letterObj.clicked || guesses >= 6 || isCorrectGuess}
+                                onClick={() => handleLetterClick(letterObj.letter)}
+                                className={isCorrectGuess ? 'enabled-button' : guesses >= 6 ? 'disabled-button' : letterObj.clicked ? randomWord.includes(letterObj.letter) ? "enabled-button" : "disabled-button" : "letter-button"}
+                            >
+                                {letterObj.letter}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
 
