@@ -34,7 +34,7 @@ function User() {
         }
         else{
             // console.log(word);
-             setCustomWord(word);
+             setCustomWord(atob(word));
             setRenderGame(true);
         }
     }
@@ -45,7 +45,9 @@ function User() {
         }
         else{
             console.log(customWord);
-            const queryParams = queryString.stringify({ word: customWord });
+            const encodedWord = btoa(customWord);
+            console.log(encodedWord);
+            const queryParams = queryString.stringify({ word: encodedWord });
             const url = `${window.location.origin}?${queryParams}`;
             console.log(url);
             setLink(url);
