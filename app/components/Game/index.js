@@ -5,6 +5,14 @@ import correctSound from "../public/sounds/correctSound.wav";
 import errorSound from "../public/sounds/errorSound.mp3";
 import winSound from "../public/sounds/winSound.mp3";
 import lostSound from '../public/sounds/lostSound.wav'
+import image_0 from '../public/images/image_0.jpg';
+import image_1 from '../public/images/image_1.jpg';
+import image_2 from '../public/images/image_2.jpg';
+import image_3 from '../public/images/image_3.jpg';
+import image_4 from '../public/images/image_4.jpg';
+import image_5 from '../public/images/image_5.jpg';
+import image_7 from '../public/images/image_7.jpg';
+
 import db from '../firebase';
 import { useEffect } from "react";
 import './index.css';
@@ -465,6 +473,10 @@ const alphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].map((letter) => ({
 
 const randomWords = words.map(each=>each.toUpperCase());
 
+const images = [image_0,image_1,image_2,image_3,image_4,image_5,image_7];
+console.log('1st image')
+console.log(images[0])
+
 const Game = ({ username, customWord, onBackClick }) => {
     //generate random word and store in the state
     userName = username;
@@ -497,6 +509,9 @@ const Game = ({ username, customWord, onBackClick }) => {
     const [score, setScore] = useState(1000);
 
     const [finalScore, setFinalScore] = useState(0);
+
+    const [currentImage, setCurrentImage] = useState(images[0].src);
+    console.log(currentImage);
 
     function playCorrectSound() {
         console.log('playing correct sound')
@@ -549,6 +564,7 @@ const Game = ({ username, customWord, onBackClick }) => {
             playErrorSound();
             setScore((prevScore) => prevScore - 100);
             setGuesses(guesses + 1);
+            setCurrentImage(images[guesses + 1].src)
             console.log(guesses);
             if (guesses >= 5) {
                 setScore(0);
@@ -642,6 +658,10 @@ const Game = ({ username, customWord, onBackClick }) => {
                 </p>}
                 {isCorrectGuess && <p className="correct-message">Correct <br /> Your Score: {finalScore}</p>}
                 {guesses >= 6 && <div className="gameover-container"> <p className="gameover-message">InCorrect!! Game Over <br /> Your Score: {score}</p> <button onClick={onBackClick} className="playAgain-button">Play Again</button></div>}
+                <div className="image-button-container">
+                <div>
+                    <img src={currentImage} className="image-hangman"/>
+                </div>
                 <div className='buttons-container'>
                     {clickedLetters.map((letterObj) => (
                         <button
@@ -653,6 +673,7 @@ const Game = ({ username, customWord, onBackClick }) => {
                             {letterObj.letter}
                         </button>
                     ))}
+                </div>
                 </div>
             </div>
 

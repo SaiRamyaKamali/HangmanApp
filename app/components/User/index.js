@@ -93,14 +93,14 @@ function User() {
                             Username:
                             <input type="text" value={username} onChange={handleInputChange} />
                         </label>
-                        <button type="submit">Submit</button>
+                        <button className="submit" type="submit">Submit</button>
                     </form>
                     <form onSubmit={handleSubmit2}>
                         <label>
                             Custom Word
                             <input type="text" value={customWord} onChange={handleInputChange2} />
                         </label>
-                        <button type="submit">Share</button>
+                        <button className="submit" type="submit">Share</button>
                     </form>
                     <p>Here is the Link: {link}</p>
                 </div>

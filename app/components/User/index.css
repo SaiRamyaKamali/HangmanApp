@@ -41,7 +41,7 @@ body {
     margin-left: 10px;
   }
   
-  button:hover {
+  .submit:hover {
     background-color: #3e8e41;
   }
   
