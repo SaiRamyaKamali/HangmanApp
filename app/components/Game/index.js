@@ -7,6 +7,7 @@ import db from '../firebase';
 import { useEffect } from "react";
 import './index.css';
 
+
 var userName = "";
 const randomWords = ['absolute',
     'accident',
@@ -460,10 +461,15 @@ const alphabet = [...'abcdefghijklmnopqrstuvwxyz'].map((letter) => ({
     clicked: false,
 }));
 
-const Game = ({ username, onBackClick }) => {
+const Game = ({ username, customWord, onBackClick }) => {
     //generate random word and store in the state
     userName = username;
+    console.log("Test "+customWord);
     const [randomWord, setRandomWord] = useState(() => {
+        if(customWord)
+        {
+            return customWord.toLowerCase();
+        }
         const randomIndex = Math.floor(Math.random() * randomWords.length);
         return randomWords[randomIndex];
     });

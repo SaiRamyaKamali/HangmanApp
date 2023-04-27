@@ -2,14 +2,29 @@
 import React, { useState, useEffect } from "react";
 import Game from "../Game";
 import db from "../firebase";
+import queryString from "query-string";
+import { useRouter } from "next/navigation";
+import { useLocation } from 'react-router-dom';
+
 
 function User() {
     const [username, setUsername] = useState("");
     const [renderGame, setRenderGame] = useState(false);
     const [scores, setScores] = useState([]);
-
+    const [customWord, setCustomWord] = useState("");
+    const [link, setLink] = useState("");
+    const queryParameters = new URLSearchParams(window.location.search);
+    const word = queryParameters.get("word");
+    console.log(word);  
+    // const query = new URLSearchParams(location.search);
+    // const word = query.get('word');
+    // console.log(router);
+    //  const {word} = router.query;
     function handleInputChange(event) {
         setUsername(event.target.value);
+    }
+    function handleInputChange2(event) {
+        setCustomWord(event.target.value);
     }
 
     function handleSubmit(event) {
@@ -18,7 +33,22 @@ function User() {
             alert('Please Enter username');
         }
         else{
+            // console.log(word);
+             setCustomWord(word);
             setRenderGame(true);
+        }
+    }
+    function handleSubmit2(event) {
+        event.preventDefault();
+        if(!customWord){
+            alert('Please Enter word');
+        }
+        else{
+            console.log(customWord);
+            const queryParams = queryString.stringify({ word: customWord });
+            const url = `${window.location.origin}?${queryParams}`;
+            console.log(url);
+            setLink(url);
         }
     }
 
@@ -59,6 +89,14 @@ function User() {
                         </label>
                         <button type="submit">Submit</button>
                     </form>
+                    <form onSubmit={handleSubmit2}>
+                        <label>
+                            Custom Word
+                            <input type="text" value={customWord} onChange={handleInputChange2} />
+                        </label>
+                        <button type="submit">Share</button>
+                    </form>
+                    <p>Here is the Link: {link}</p>
                 </div>
 
                 {/* <div className="scoreBoard">
@@ -87,7 +125,7 @@ function User() {
                 </div>
                 </>
             ) : (
-                <Game username={username} onBackClick={handleBackClick} />
+                <Game username={username} customWord = {customWord}onBackClick={handleBackClick} />
             )}
         </div>
     );
