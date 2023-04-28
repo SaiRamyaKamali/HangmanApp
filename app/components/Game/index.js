@@ -657,6 +657,7 @@ const Game = ({ username, customWord, onBackClick }) => {
                     ))}
                 </p>}
                 {isCorrectGuess && <p className="correct-message">Correct <br /> Your Score: {finalScore}</p>}
+                {customWord&&(isCorrectGuess)&&<button className="playAgain-button" onClick={onBackClick}>Back</button>}
                 {guesses >= 6 && <div className="gameover-container"> <p className="gameover-message">InCorrect!! Game Over <br /> Your Score: {finalScore}</p> <button onClick={onBackClick} className="playAgain-button">Play Again</button></div>}
                 <div className="image-button-container">
                     <div>
