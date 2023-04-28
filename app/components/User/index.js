@@ -135,9 +135,11 @@ import { faClipboard } from '@fortawesome/free-solid-svg-icons'
                             <button onClick={copyLink} className="copy-button">Copy to Clipboard<FontAwesomeIcon icon={faClipboard} /></button>
                         </div>
                         )}
-                        <div className="scorebord-button">
+                        {word==null?(
+                            <div className="scorebord-button">
                             <button className="submit" onClick={handleBoardClick}>Score Board</button>
                         </div>
+                        ):null}
                     </div>
                     </>
                 ) : !renderBoard? (
