@@ -11,6 +11,7 @@ import '../User/index.css';
 function User() {
     const [username, setUsername] = useState("");
     const [renderGame, setRenderGame] = useState(false);
+    const [renderBoard, setRenderBoard] = useState(false);
     const [scores, setScores] = useState([]);
     const [customWord, setCustomWord] = useState("");
     const [link, setLink] = useState("");
@@ -61,6 +62,10 @@ function User() {
     function handleBackClick() {
         setUsername("");
         setRenderGame(false);
+        setRenderBoard(false);
+    }
+    function handleBoardClick(){
+        setRenderBoard(true);
     }
 
     useEffect(() => {
@@ -84,7 +89,7 @@ function User() {
         },[]);
     return (
         <div>
-            {!renderGame ? (
+            {!renderGame && !renderBoard? (
                 <>
                 <div>
                     <h1>Enter your username</h1>
@@ -103,12 +108,20 @@ function User() {
                         <button className="submit" type="submit">Share</button>
                     </form>
                     <p>Here is the Link: {link}</p>
+                    <div>
+                        <button className="submit" onClick={handleBoardClick}>ScoreBoard</button>
+                    </div>
                 </div>
 
                 {/* <div className="scoreBoard">
                     <button className="board">ScoreBoard</button>
                 </div> */}
-                 <div>
+                 
+                </>
+            ) : !renderBoard? (
+                <Game username={username} customWord = {customWord}onBackClick={handleBackClick} />
+            ):(
+                <div>
                 <h2>Top Scores</h2>
                 <table>
                     <thead>
@@ -129,9 +142,6 @@ function User() {
                     </tbody>
                 </table>
                 </div>
-                </>
-            ) : (
-                <Game username={username} customWord = {customWord}onBackClick={handleBackClick} />
             )}
         </div>
     );
