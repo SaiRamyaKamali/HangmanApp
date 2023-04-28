@@ -575,21 +575,10 @@ const Game = ({ username, customWord, onBackClick }) => {
             setGuesses(guesses + 1);
             setCurrentImage(images[guesses + 1].src)
             console.log(guesses);
-            /*if (guesses >= 5) {
-                setScore(0);
-            }*/
         } else if (!newWordState.includes(null)) {
             // setFinalScore(finalScore+score);
             setIsCorrectGuess(true);
-        } /*else {
-            for (let i = 0; i < randomWord.length; i++) {
-                if (randomWord[i] === letter) {
-                    newWordState[i] = letter;
-                }
-            }
-            setWordState(newWordState);
-        }*/
-
+        }
     }
 
     //if user guesses the word correctly a new word will be generated after 2 seconds
@@ -617,7 +606,8 @@ const Game = ({ username, customWord, onBackClick }) => {
     //when game is over the score is automatically updated
     useEffect(() => {
         if (guesses >= 6) {
-            playLostSound()
+            setFinalScore(finalScore + score);
+            playLostSound();
             // update score in the database
             db.collection("scores").add({
                 Name: username,
@@ -633,30 +623,18 @@ const Game = ({ username, customWord, onBackClick }) => {
         if (confirmed) {
             onBackClick();
         }
-    }
-
-    //when user clicks exit save the current total score/ cumulative score and exit
-    /*function onClickExit() {
-        db.collection("scores").add({
-            Name: username,
-            sc: finalScore,
-        }).then(() => {
-            onBackClick();
-        }).catch((error) => {
-            console.log("Error saving score:", error);
-        });
-    }*/
+    } 
 
     return (
         <div className="game-page-bg">
             <div>
                 <div className="leader-board-exit-container">
-                <button onClick={onClickExit} className='exit-button'> <FontAwesomeIcon icon={faTimes} className="exit-icon" /></button>
-                <button onClick={openModal} className="leaderboard-button">Learder Board</button>
-                <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-                    <h2>Leader Board</h2>
-                    <button onClick={closeModal} className="leaderboard-button">Close Modal</button>
-                </Modal>
+                    <button onClick={onClickExit} className='exit-button'> <FontAwesomeIcon icon={faTimes} className="exit-icon" /></button>
+                    <button onClick={openModal} className="leaderboard-button">Learder Board</button>
+                    <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+                        <h2>Leader Board</h2>
+                        <button onClick={closeModal} className="leaderboard-button">Close Modal</button>
+                    </Modal>
                 </div>
                 <div className="topSection">
                     <p className="current-score">Current Score: <span className="score">{score}</span></p>
