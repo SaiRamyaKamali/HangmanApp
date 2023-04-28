@@ -17,7 +17,9 @@ import { faClipboard } from '@fortawesome/free-solid-svg-icons'
         const [scores, setScores] = useState([]);
         const [customWord, setCustomWord] = useState("");
         const [link, setLink] = useState("");
-        const queryParameters = new URLSearchParams(window.location.search);
+        var queryParameters;
+        if(typeof window!=="undefined")
+        queryParameters = new URLSearchParams(window.location.search);
         const word = queryParameters.get("word");
         console.log(word); 
         // const query = new URLSearchParams(location.search);
