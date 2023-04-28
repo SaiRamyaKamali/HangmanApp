@@ -587,6 +587,8 @@ const Game = ({ username, customWord, onBackClick }) => {
         if (isCorrectGuess) {
             // update score in the database
             setFinalScore((prevScore) => prevScore + score);
+            if(customWord=="")
+            {
             const timeoutId = setTimeout(() => {
                 const randomIndex = Math.floor(Math.random() * randomWords.length);
                 setRandomWord(randomWords[randomIndex]);
@@ -600,6 +602,7 @@ const Game = ({ username, customWord, onBackClick }) => {
             }, 2000);
 
             return () => clearTimeout(timeoutId);
+        }
         }
     }
         , [isCorrectGuess, randomWords]);
