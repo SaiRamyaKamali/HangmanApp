@@ -621,7 +621,6 @@ const Game = ({ username, customWord, onBackClick }) => {
         }
     }, [guesses]);
 
-
     function onClickExit() {
         const confirmed = window.confirm("Your Score will not be saved until you finish the game. Are you sure you want to exit?");
 
@@ -629,7 +628,13 @@ const Game = ({ username, customWord, onBackClick }) => {
             onBackClick();
         }
     } 
-
+    function handleClick()
+    {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('word');
+        window.history.replaceState({}, '', url.toString());
+        onBackClick();
+    }
     return (
         <div className="game-page-bg">
             <div>
@@ -657,7 +662,7 @@ const Game = ({ username, customWord, onBackClick }) => {
                     ))}
                 </p>}
                 {isCorrectGuess && <p className="correct-message">Correct <br /> Your Score: {finalScore}</p>}
-                {customWord&&(isCorrectGuess)&&<button className="playAgain-button" onClick={onBackClick}>Back</button>}
+                {customWord&&(isCorrectGuess)&&<button className="playAgain-button" onClick={handleClick}>Back</button>}
                 {guesses >= 6 && <div className="gameover-container"> <p className="gameover-message">InCorrect!! Game Over <br /> Your Score: {finalScore}</p> <button onClick={onBackClick} className="playAgain-button">Play Again</button></div>}
                 <div className="image-button-container">
                     <div>
