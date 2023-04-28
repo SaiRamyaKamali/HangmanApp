@@ -311,7 +311,6 @@ const words = ['absolute',
     'objection',
     'occasion',
     'official',
-    'old-fashioned',
     'omission',
     'operation',
     'operator',
@@ -640,11 +639,6 @@ const Game = ({ username, customWord, onBackClick }) => {
             <div>
                 <div className="leader-board-exit-container">
                     <button onClick={onClickExit} className='exit-button'> <FontAwesomeIcon icon={faTimes} className="exit-icon" /></button>
-                    <button onClick={openModal} className="leaderboard-button">Learder Board</button>
-                    <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-                        <h2>Leader Board</h2>
-                        <button onClick={closeModal} className="leaderboard-button">Close Modal</button>
-                    </Modal>
                 </div>
                 <div className="topSection">
                     <p className="current-score">Current Score: <span className="score">{score}</span></p>
@@ -662,7 +656,7 @@ const Game = ({ username, customWord, onBackClick }) => {
                     ))}
                 </p>}
                 {isCorrectGuess && <p className="correct-message">Correct <br /> Your Score: {finalScore}</p>}
-                {customWord&&(isCorrectGuess)&&<button className="playAgain-button" onClick={handleClick}>Back</button>}
+                {customWord&&(isCorrectGuess)&&<button className="playAgain-button" onClick={handleClick}>Continue Playing</button>}
                 {guesses >= 6 && <div className="gameover-container"> <p className="gameover-message">InCorrect!! Game Over <br /> Your Score: {finalScore}</p> <button onClick={onBackClick} className="playAgain-button">Play Again</button></div>}
                 <div className="image-button-container">
                     <div>

@@ -6,6 +6,8 @@
     import { useRouter } from "next/navigation";
     import { useLocation } from 'react-router-dom';
     import '../User/index.css';
+    import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClipboard } from '@fortawesome/free-solid-svg-icons'
 
 
     function User() {
@@ -67,17 +69,20 @@
         function handleBoardClick(){
             setRenderBoard(true);
         }
+        
         function copyLink() {
-            var linkField = document.getElementById("link-field");
-        
-            linkField.select();
-        
-        
-            document.execCommand("copy");
-        
-        alert("Copied the link: " + linkField.value);
 
-        }
+        const linkField = { link }.link
+        const tempInput = document.createElement("input");
+        tempInput.value = linkField
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        alert("Copied the link: " + linkField);
+
+    }
+
 
         useEffect(() => {
             const unsubscribe = db.collection('scores')
@@ -102,32 +107,35 @@
             <div>
                 {!renderGame && !renderBoard? (
                     <>
-                    <div>
-                        <h1 className="first">Hangman Team : 26</h1>
+                    <div className="main-page-container">
+                        <h1 className="first">Welcome to Hangman!!</h1>
                         <form onSubmit={handleSubmit}>
                             <label>
-                                Username:
-                                <input type="text" value={username} onChange={handleInputChange} />
+                            Enter Username to Play
+                                <br/>
+                                <input type="text" value={username} onChange={handleInputChange} className="username-input" placeholder="username"/>
                             </label>
                             <button className="submit" type="submit">Play</button>
                         </form>
                         {word==null?(
                         <form onSubmit={handleSubmit2}>
                             <label>
-                                Custom Word
-                                <input type="text" value={customWord} onChange={handleInputChange2} />
+                            Create a Custom Word and Challenge others
+                            <br/>
+                                <input type="text" value={customWord} onChange={handleInputChange2}  className="username-input" placeholder="custom word"/>
                             </label>
-                            <button className="submit" type="submit">Share</button>
+                            <button className="submit" type="submit">Get Link</button>
                         </form>
                         ):null}
                         {link&&(
                         <div class="link-box">
                             <p>Here is the Link:</p>
-                            <p class="link">{link}</p>
+                            <a className="link" href={`${link}`} target="_blank">{link}</a>
+                            <button onClick={copyLink} className="copy-button">Copy to Clipboard<FontAwesomeIcon icon={faClipboard} /></button>
                         </div>
                         )}
-                        <div>
-                            <button className="submit" onClick={handleBoardClick}>ScoreBoard</button>
+                        <div className="scorebord-button">
+                            <button className="submit" onClick={handleBoardClick}>Score Board</button>
                         </div>
                     </div>
                     </>
