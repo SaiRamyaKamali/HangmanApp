@@ -122,6 +122,8 @@ function User() {
                 <Game username={username} customWord = {customWord}onBackClick={handleBackClick} />
             ):(
                 <div>
+                    <button className="submit" onClick={handleBackClick}>Back
+                    </button>
                 <h2>Top Scores</h2>
                 <table>
                     <thead>
