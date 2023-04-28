@@ -575,20 +575,20 @@ const Game = ({ username, customWord, onBackClick }) => {
             setGuesses(guesses + 1);
             setCurrentImage(images[guesses + 1].src)
             console.log(guesses);
-            if (guesses >= 5) {
+            /*if (guesses >= 5) {
                 setScore(0);
-            }
+            }*/
         } else if (!newWordState.includes(null)) {
             // setFinalScore(finalScore+score);
             setIsCorrectGuess(true);
-        } else {
+        } /*else {
             for (let i = 0; i < randomWord.length; i++) {
                 if (randomWord[i] === letter) {
                     newWordState[i] = letter;
                 }
             }
             setWordState(newWordState);
-        }
+        }*/
 
     }
 
@@ -606,6 +606,7 @@ const Game = ({ username, customWord, onBackClick }) => {
                 setIsCorrectGuess(false);
                 setFinalScore(finalScore + score);
                 setScore(1000);
+                setCurrentImage(images[0].src);
             }, 2000);
 
             return () => clearTimeout(timeoutId);
@@ -673,7 +674,7 @@ const Game = ({ username, customWord, onBackClick }) => {
                     ))}
                 </p>}
                 {isCorrectGuess && <p className="correct-message">Correct <br /> Your Score: {finalScore}</p>}
-                {guesses >= 6 && <div className="gameover-container"> <p className="gameover-message">InCorrect!! Game Over <br /> Your Score: {score}</p> <button onClick={onBackClick} className="playAgain-button">Play Again</button></div>}
+                {guesses >= 6 && <div className="gameover-container"> <p className="gameover-message">InCorrect!! Game Over <br /> Your Score: {finalScore}</p> <button onClick={onBackClick} className="playAgain-button">Play Again</button></div>}
                 <div className="image-button-container">
                     <div>
                         <img src={currentImage} className="image-hangman" />
