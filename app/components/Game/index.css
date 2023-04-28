@@ -198,3 +198,20 @@
     cursor: pointer;
     margin-left: 10px;
 }
+.first{
+  font-size: 3rem;
+  font-weight: 800;
+  padding-bottom: 0.3rem;
+}
+.link-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.link {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  margin: 0;
+}
+

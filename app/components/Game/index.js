@@ -474,6 +474,7 @@ const alphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].map((letter) => ({
 
 const randomWords = words.map(each => each.toUpperCase());
 
+
 const images = [image_0, image_1, image_2, image_3, image_4, image_5, image_7];
 console.log('1st image')
 console.log(images[0])

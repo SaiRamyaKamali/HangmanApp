@@ -67,6 +67,17 @@ function User() {
     function handleBoardClick(){
         setRenderBoard(true);
     }
+    function copyLink() {
+        var linkField = document.getElementById("link-field");
+      
+        linkField.select();
+      
+      
+        document.execCommand("copy");
+      
+       alert("Copied the link: " + linkField.value);
+
+    }
 
     useEffect(() => {
         const unsubscribe = db.collection('scores')
@@ -92,13 +103,13 @@ function User() {
             {!renderGame && !renderBoard? (
                 <>
                 <div>
-                    <h1>Enter your username</h1>
+                    <h1 className="first">Hangman Team : 26</h1>
                     <form onSubmit={handleSubmit}>
                         <label>
                             Username:
                             <input type="text" value={username} onChange={handleInputChange} />
                         </label>
-                        <button className="submit" type="submit">Submit</button>
+                        <button className="submit" type="submit">Play</button>
                     </form>
                     <form onSubmit={handleSubmit2}>
                         <label>
@@ -107,7 +118,10 @@ function User() {
                         </label>
                         <button className="submit" type="submit">Share</button>
                     </form>
-                    <p>Here is the Link: {link}</p>
+                    <div class="link-box">
+                        <p>Here is the Link:</p>
+                        <p class="link">{link}</p>
+                    </div>
                     <div>
                         <button className="submit" onClick={handleBoardClick}>ScoreBoard</button>
                     </div>
