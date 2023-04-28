@@ -17,11 +17,16 @@ import { faClipboard } from '@fortawesome/free-solid-svg-icons'
         const [scores, setScores] = useState([]);
         const [customWord, setCustomWord] = useState("");
         const [link, setLink] = useState("");
+        const [word, setWord] = useState('');
         var queryParameters;
-        if(typeof window!=="undefined")
-        queryParameters = new URLSearchParams(window.location.search);
-        const word = queryParameters.get("word");
-        console.log(word); 
+       // var word;
+        useEffect(() => {
+            if (typeof window !== "undefined") {
+                queryParameters = new URLSearchParams(window.location.search);
+               setWord(queryParameters.get("word"));
+              console.log("custom word", word);
+            }
+          }, []);
         // const query = new URLSearchParams(location.search);
         // const word = query.get('word');
         // console.log(router);
@@ -67,6 +72,7 @@ import { faClipboard } from '@fortawesome/free-solid-svg-icons'
             setUsername("");
             setRenderGame(false);
             setRenderBoard(false);
+            setWord(null);
             setCustomWord('');
         }
         function handleBoardClick(){
@@ -131,7 +137,7 @@ import { faClipboard } from '@fortawesome/free-solid-svg-icons'
                         </form>
                         ):null}
                         {link&&(
-                        <div class="link-box">
+                        <div className="link-box">
                             <p>Here is the Link:</p>
                             <a className="link" href={`${link}`} target="_blank">{link}</a>
                             <button onClick={copyLink} className="copy-button">Copy to Clipboard<FontAwesomeIcon icon={faClipboard} /></button>
