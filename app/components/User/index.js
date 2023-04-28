@@ -65,6 +65,7 @@ import { faClipboard } from '@fortawesome/free-solid-svg-icons'
             setUsername("");
             setRenderGame(false);
             setRenderBoard(false);
+            setCustomWord('');
         }
         function handleBoardClick(){
             setRenderBoard(true);
