@@ -613,9 +613,10 @@ const Game = ({ username, customWord, onBackClick }) => {
             setFinalScore(finalScore + score);
             playLostSound();
             // update score in the database
+            console.log("final Scoring"+finalScore);
             db.collection("scores").add({
                 Name: username,
-                sc: finalScore,
+                sc: finalScore+score,
             });
         }
     }, [guesses]);
