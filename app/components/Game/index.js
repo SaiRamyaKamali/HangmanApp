@@ -641,16 +641,16 @@ const Game = ({ username, customWord, onBackClick }) => {
                     <button onClick={onClickExit} className='exit-button'> <FontAwesomeIcon icon={faTimes} className="exit-icon" /></button>
                 </div>
                 <div className="topSection">
-                    <p className="current-score">Current Score: <span className="score">{score}</span></p>
-                    <p className="your-score">Total Score: <span className="final-score">{finalScore}</span></p>
+                    <p className="current-score color-black">Current Score: <span className="score">{score}</span></p>
+                    <p className="your-score color-black">Total Score: <span className="final-score">{finalScore}</span></p>
                 </div>
             </div>
             <div className="gameContainer">
                 <h1 className="greeting">Hello, {username}!</h1>
-                <p className="guessWord">Guess the word:</p>
+                <p className="guessWord color-black">Guess the word:</p>
                 {guesses >= 6 ? <p className="game-over">{randomWord}</p> : <p>
                     {wordState.map((letter, index) => (
-                        <span key={index} className="letter">
+                        <span key={index} className="letter color-black">
                             {letter ? `${letter} ` : '_ '}
                         </span>
                     ))}
